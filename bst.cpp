@@ -217,7 +217,25 @@ public:
 
 	int height(T item){
 		if(find(item)){
-			return countHeight(root,item);
+			node<T> *p;
+			p = root;
+			while(p->data != item){
+				if(item > p->data){
+					p = p->right;
+				}
+				else
+					p = p->left;
+			}
+			int hL = 0,hR = 0,h = countHeight(root);
+			if(p->left != NULL)
+				hL = countHeight(p->left);
+			if(p->right != NULL)
+				hR = countHeight(p->right);
+			int temp = hL;
+			if(hR > hL){
+				temp = hR;
+			}
+			return temp;
 		}
 		else
 			return -1;
@@ -265,7 +283,7 @@ public:
 
 	bool find(T item){
 		node<T> *p;
-		p = this->root;
+		p = root;
 		while(p != NULL){
 			if(item > p->data){
 				p = p->right;
@@ -338,5 +356,6 @@ int main(){
 //	tree.path(11);
 	//cout << tree.atLevel(3) << endl;;
 	cout << tree.isBalanced() << endl;
+	cout << tree.height(9) << endl;
 	return 0; 
 }
