@@ -105,8 +105,13 @@ void quickSort(vector<int> &a,int left,int right){
 		int pivot = median(a,left,right);
 		int i = left;
 		int j = right -1;
-		if(a[left] == pivot){
-			a[left] = a[j];
+		if(a[right] < a[left]){
+			int t = a[right];
+			a[right] = a[left];
+			a[left] = t;
+		}
+		if(a[i] == pivot){
+			a[i] = a[j];
 			a[j] = pivot;
 		}
 		else if(a[center] == pivot){
@@ -114,17 +119,19 @@ void quickSort(vector<int> &a,int left,int right){
 			a[j] = pivot;	
 		}
 		else {
-			a[right] = a[j];
+			a[j+1] = a[j];
 			a[j] = pivot;	
 		}
-		a[center] = a[j];
-		a[j] = pivot;
+		j--;
 		while(true){
 			while(a[i] < pivot){
 				i++;
 			}
 			while(a[j] > pivot){
 				j--;
+			}
+			if(i == j){
+				j++;
 			}
 			if(i < j){
 				int temp = a[i];
@@ -230,7 +237,7 @@ int main(){
 	}
 	cout << endl;
 	vector<int> e;
-	for(int i = 0;i < size*2;i++){
+	for(int i = 0;i < size*3+1;i++){
 		int j = 0;
 		int rand = randomInt(0,1000);
 		bool isHave = false;
@@ -245,8 +252,8 @@ int main(){
 			e.push_back(rand);
 		}
 	}
-	quickSort(e,0,(size*2)-1);
-	for(int i =0;i < size*2;i++){
+	quickSort(e,0,(size*3));
+	for(int i =0;i < size*3+1;i++){
 		cout << e[i] << " ";
 	}
 	cout << endl;
